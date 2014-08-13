@@ -5,6 +5,15 @@ HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using X
 
 ![Form submission comparision](https://github.com/bengarrett/html5Upload/blob/master/screenshots/form.submission.comparison.png)
 
+####Requirements
+
+* ColdFusion, Railo or CFML compatible server that supports the `cffile action = "uploadAll"` tag or the `FileUploadAll` function.
+* A client web browser that supports _XMLHttpRequest Level 2_ and the _FormData API_.
+
+####Recommendation
+
+* A client web browser with its JavaScript console enabled to view `console.log` outputs. [FireBug in FireFox](https://getfirebug.com), [DevTools console in Chrome](https://developer.chrome.com/devtools/index) or the [Web Inspector console in Safari](https://developer.apple.com/safari/tools/).
+
 ####Sample screenshots
 
 ![Files selection](https://github.com/bengarrett/html5Upload/blob/master/screenshots/pre-upload.files.section.png)

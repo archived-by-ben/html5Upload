@@ -31,7 +31,7 @@ xhr.onreadystatechange = function(e) {
 	// then display the server's response (HTML created by submit.cfm) in the <div id="feedBack"></div> block
 	if (xhr.readyState==4 && xhr.status==200) {
 		document.getElementById("feedBack").style.display='block';
-    	document.getElementById("feedBack").innerHTML=xhr.responseText;
+		document.getElementById("feedBack").innerHTML=xhr.responseText;
 	}
 }
 
@@ -60,7 +60,7 @@ xhr.upload.onprogress = function(e) {
 	// if progress is 100% notify client that files are being processed by the server
 	if(percentComplete>=100) {
 		document.getElementById("feedBack").style.display='block';
-	    document.getElementById("feedBack").innerHTML='Please wait while the server processes the files.';
+		document.getElementById("feedBack").innerHTML='Please wait while the server processes the files.';
 	}
 };
 
@@ -250,9 +250,9 @@ function startUpload(form) {
 	for (var i = 0; i < file.length; i++) {
 
 		// in debug mode return the processed file name
-	    debugLog(file[i].name);
+		debugLog(file[i].name);
 
-	    // append the 'file' variable data to our new form variable formData as fieldnames, file0, file1, file2, etc...
+		// append the 'file' variable data to our new form variable formData as fieldnames, file0, file1, file2, etc...
 		formData.append("file" + i, file[i]);
 	}
 

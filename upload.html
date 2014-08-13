@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- upload.html -->
+	<head>
+		<title>HTML5 Multiple files upload</title>
+		<style>
+			body {}
+			header, footer { text-align: center; }
+			main { padding: 2em; }
+			#feedBack { display: none; }
+			#uploadProgress { display: none; }
+		</style>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
+		<script src="submit.js"></script>
+		<script>
+			function displayUpBtn() {
+				document.getElementById("upload-files-button").style.display='inline';
+			}
+		</script>
+	</head>
+	<body onload="displayUpBtn();">
+		<header>
+			<h3>html5Upload</h3>
+			<h5>HTML5 Multiple files upload example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2</h5>
+		</header>
+		<main>
+			<form action="submit.cfm" enctype="multipart/form-data" id="form1" class="form-horizontal" method="post">
+				<div class="form-group">
+					<label for="upload-tmpFiles" class="col-sm-1 control-label">Files to upload</label>
+					<div class="col-sm-10">
+					<input class="btn btn-default" id="upload-tmpFiles" name="upload.tmpFiles" type="file" onchange="fileSelected();" required multiple>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="upload-comment" class="col-sm-1 control-label">Information</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" id="upload-comment" name="upload.comment" rows="2" placeholder="About these files."></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-1 control-label">Controls</label>
+					<div class="col-sm-11">
+						<!-- 
+							The Upload files! button needs to be a type=button for the JavaScript to trigger correctly.
+							This button will be displayed using the displayUpBtn() function triggered by the <body> onload event.
+						-->
+						<button type="button" id="upload-files-button" class="btn btn-default" onclick="startUpload(this.form);" style="display: none;">Upload files!</button>
+						<noscript>
+							<button type="submit" class="btn btn-default">Upload files!</button>
+						</noscript>
+						<button type="button" class="btn btn-default" onclick="abortUpload(this.form);">abort</button>
+						<button type="reset" class="btn btn-default" onclick="resetUpload(this.form);">reset</button>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="debug-mode" name="debug.mode"> Debug mode (use console.log and display cfdumps)
+							</label>
+						</div>
+					</div>
+				</div>
+				<div id="uploadProgress" class="form-group">
+					<label class="col-sm-1 control-label">Progress</label>
+					<div class="col-sm-11">
+						<progress id="progressBar" max="100" value="0"></progress> <strong><span id="progressPercentage">0</span>%</strong>
+					</div>
+				</div>
+			</form>
+			<div id="feedBack">
+				<!-- form feedback messages -->
+			</div>
+		</main>
+		<footer>
+			<a href="http://caniuse.com/xhr2">Not working?</a> <noscript>With your JavaScript disabled the HTML5 multiple files input is not processed correctly by ColdFusion/Railo.</noscript>
+		</footer>
+	</body>
+</html>

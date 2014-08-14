@@ -17,6 +17,10 @@ HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using X
 
 `submit.js` in its current form is too verbose as it is intended for debugging and feedback. **It should not be used in a production environment without modification**.
 
+####Usage
+
+Download the ZIP and extract it into the webroot of your CFML server. Point a modern web browser to `upload.html`. For ColdFusion setups on a local machine this could be `http://localhost:8500/html5Upload/upload.html`.
+
 ####How does it work?
 
 The application comes with 3 primary files plus a customized version of [BootStrap](http://getbootstrap.com) for some basic HTML5 theming.

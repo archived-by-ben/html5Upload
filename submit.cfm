@@ -4,6 +4,10 @@
 	It has intentionally been kept simple and verbose.
 	It should not be used on a production server without modification!
 --->
+<!--- Directory to save uploads to. --->
+<!--- Make sure the path exists and is correct. --->
+<cfset savedUploadsPath = "C:\Temp\">
+<!--- <cfset savedUploadsPath = "/tmp/"> --->
 
 <!--- Use Debug mode? --->
 <cfif structKeyExists(FORM, "debug.mode")>
@@ -30,10 +34,9 @@
 </cfif>
 
 <!--- Upload all files to the CFML server destination path. --->
-<!--- Make sure the path exists and is correct. --->
 <cffile 
 	action="uploadall"
-	destination="/tmp/"
+	destination="#savedUploadsPath#"
 	nameConflict="MakeUnique"
 	result="uploadResults">
 

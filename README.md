@@ -1,7 +1,9 @@
 html5Upload
 ===========
 
-HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2. It has no need for JavaScript library dependancies such as JQuery.
+HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2.
+
+The [_HTML5 `<input>` multiple Attribute_](http://www.w3schools.com/tags/att_input_multiple.asp) is not correctly handled by ColdFusion/Railo's `cffile action = "uploadAll"` tag or the `FileUploadAll` functions. This application uses JavaScript to correct the form file submission without the need of library dependancies such as JQuery.
 
 ####Requirements
 

@@ -1,7 +1,7 @@
 html5Upload
 ===========
 
-HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2.
+HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2. It has no need for JavaScript library dependancies such as JQuery.
 
 ####Requirements
 
@@ -44,6 +44,12 @@ The `startUpload()` function POSTs the _FormData API_ generated form to `submit.
 
 [Uploading aborted](https://github.com/bengarrett/html5Upload/blob/master/screenshots/upload.files.abort.png)
 
+####Resources used
+* [New Tricks in XMLHttpRequest2 by Eric Bidelman](http://www.html5rocks.com/en/tutorials/file/xhr2/)
+* [Html5 File Upload with Progress by Shiv Kumar](http://www.matlus.com/html5-file-upload-with-progress/)
+* [w3schools - The XMLHttpRequest Object](http://www.w3schools.com/dom/dom_http.asp)
+* [W3C - File API](http://www.w3.org/TR/file-upload/)
+* [W3C - FormData XMLHttpRequest](https://dvcs.w3.org/hg/xhr/raw-file/tip/Overview.html)
 
 ####Licence
 [The MIT License (MIT)](http://opensource.org/licenses/MIT)

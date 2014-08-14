@@ -19,7 +19,9 @@ HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using X
 
 ####Usage
 
-Download the ZIP and extract it into the webroot of your CFML server. Point a modern web browser to `upload.html`. For ColdFusion setups on a local machine this could be `http://localhost:8500/html5Upload/upload.html`.
+1. Download the ZIP and extract it into the webroot of your CFML server.
+2. Edit `submit.cfm` and make sure the `destination=` argument for the `<cffile>` tag on line 34 points to a valid directory, save any changes.
+3. Point a modern web browser to `upload.html`. For ColdFusion setups on a local machine this could be `http://localhost:8500/html5Upload/upload.html`.
 
 ####How does it work?
 

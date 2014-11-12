@@ -9,6 +9,19 @@
 <cfset savedUploadsPath = "C:\Temp\">
 <!--- <cfset savedUploadsPath = "/tmp/"> --->
 
+<!--- Converts file size as bytes into kB or MB --->
+<cffunction name="filesize" access="private">
+	<cfargument name="bytes" type="numeric" required="true">
+	<cfset size = "">
+	<cfif arguments.bytes lte 1048576>
+		<cfset size = "#Round(arguments.bytes / 1024 )#kB">
+	<cfelse>
+		<cfset size = (arguments.bytes / ( 1024 * 1024 ) )>
+		<cfset size = "#NumberFormat(size, "0.0")#MB">
+	</cfif>
+	<cfreturn size>
+</cffunction>
+
 <!--- Use Debug mode? --->
 <cfif structKeyExists(FORM, "debug.mode")>
 	<cfif FORM["debug.mode"] eq "on">
@@ -33,6 +46,11 @@
 	<cfset fileCount = FORM.file.count>
 </cfif>
 
+<!--- Check that the directory saved to savedUploadsPath exists --->
+<cfif directoryExists(savedUploadsPath) is false>
+	<cfthrow message="Cannot save uploads as #savedUploadsPath# does not exist, to fix edit variable ##savedUploadsPath##">
+</cfif>
+
 <!--- Upload all files to the CFML server destination path. --->
 <cffile 
 	action="uploadall"
@@ -48,7 +66,7 @@
 	<!--- Loop through the UploadResults --->
 	<cfloop from="1" to="#fileCount#" index="i">
 
-		<div id="upload-result-#i#">File #i#: <code>#uploadResults[i].clientfile#</code> at #round(uploadResults[i].filesize / ( 1024 * 1024 ) )#MB
+		<div id="upload-result-#i#">File #i#: <code>#uploadResults[i].clientfile#</code> at #filesize(uploadResults[i].filesize)#
 			<cfif uploadResults[i].filewassaved is true>
 				was saved to the server as <code>#uploadResults[i].serverfile#</code> in <code>#uploadResults[i].serverdirectory#</code>.
 			<cfelse>

@@ -3,6 +3,7 @@
 	<!-- upload.html -->
 	<head>
 		<title>HTML5 Multiple files upload</title>
+		<meta charset="utf-8" />
 		<style>
 			body {}
 			header, footer { text-align: center; }
@@ -61,7 +62,7 @@
 				<div id="uploadProgress" class="form-group">
 					<label class="col-sm-1 control-label">Progress</label>
 					<div class="col-sm-11">
-						<progress id="progressBar" max="100" value="0"></progress> <strong><span id="progressPercentage">0</span>%</strong>
+						<progress id="progressBar" max="100" value="0"></progress> <strong><span id="progressPercentage">0</span>%</strong> <span id="transferSpeed"></span>
 					</div>
 				</div>
 			</form>

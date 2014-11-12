@@ -18,26 +18,32 @@
 	http://www.w3schools.com/dom/dom_http.asp
 	http://www.w3.org/TR/file-upload/
  */
-
+'use strict';
 // Create a XMLHttpRequest Object named 'xhr'.
 var xhr = new XMLHttpRequest();
+// Global container to hold a tick counter which is used to calculate client upload speeds.
+var transferTimer;
 
 // Event, onreadystatechange, Fires when server's response changes after a request.
 xhr.onreadystatechange = function(e) {
-
 	debugLog("onreadystatechange: " + readyStateDesc(xhr.readyState));
 
 	// if readyState is 4 (Request finished and response is ready) and the server's response code is 200 (OK)
 	// then display the server's response (HTML created by submit.cfm) in the <div id="feedBack"></div> block
-	if (xhr.readyState==4 && xhr.status==200) {
+	if (this.readyState==4 && this.status==200) {
 		document.getElementById("feedBack").style.display='block';
 		document.getElementById("feedBack").innerHTML=xhr.responseText;
 	}
+
+	// if readyState is 1 (Server connection established)
+    // start millisecond tick count to calculate client upload speeds
+	if(this.readyState == 1) {
+        transferTimer = new Date().getTime();
+    }
 }
 
 // Event, loadstart, Fired when read starts.
 xhr.upload.onloadstart = function(e) {
-
 	debugLog('onloadstart: ' + readyStateDesc(xhr.readyState));
 
 	// display progress bar
@@ -47,7 +53,6 @@ xhr.upload.onloadstart = function(e) {
 // Event, progress, Fired while reading (and decoding) blob (binary object).
 // In layman's terms: This fires during a file upload to the server.
 xhr.upload.onprogress = function(e) {
-
 	// upload progress calculation
 	// calculate using the ProgressEvent loaded and total values
 	// example: ( ( 150000 bytes loaded / 600000 bytes total ) * 100 ) = 25% complete
@@ -57,26 +62,27 @@ xhr.upload.onprogress = function(e) {
 	progressBar.value = percentComplete;
 	progressPercentage.innerHTML = percentComplete.toString();
 
+	// update transfer speed
+	document.getElementById("transferSpeed").innerHTML = transferSpeed(e.loaded);
+
 	// if progress is 100% notify client that files are being processed by the server
 	if(percentComplete>=100) {
 		document.getElementById("feedBack").style.display='block';
 		document.getElementById("feedBack").innerHTML='Please wait while the server processes the files.';
 	}
-};
+}
 
 // Event, abort, Fired when read has been aborted.
 xhr.upload.onabort = function(e) {
-
 	debugLog("onabort: Uploads aborted, either by yourself or by the server.");
 	debugLog('onabort: ' + readyStateDesc(xhr.readyState));
-};
+}
 
 // Event, error, Fired when read has failed.
 xhr.upload.onerror = function(e) {
-
 	debugLog("onerror: Upload failed as the file cannot be read, either due to it being locked by another application or a permission problem.");
 	debugLog('onerror: ' + readyStateDesc(xhr.readyState));
-};
+}
 
 // Event, load, Fired when read has successfully completed.
 xhr.upload.onload = function(e) {
@@ -86,7 +92,6 @@ xhr.upload.onload = function(e) {
 
 // Event, loadend, Fired when the request has completed (either in success or failure).
 xhr.onloadend = function(e) {
-
 	debugLog('onloadend: ' + readyStateDesc(xhr.readyState));
 
 	// if the server's response code is 200 (OK) then upload was successful
@@ -94,7 +99,6 @@ xhr.onloadend = function(e) {
 		debugLog("onloadend: Success upload completed.");
 		debugLog(responseHeader('onloadend')); // server response header data
 	} else {
-
 		// return any server status error codes and status texts
 		debugLog("onloadend: Error, upload failed with error status " + xhr.status + ": " + xhr.statusText);
 		
@@ -177,9 +181,9 @@ function fileSelected() {
 		// determine and humanize file size of file
 		var fileSize = 0;
 		if (file.size > 1024 * 1024)
-			fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+			fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toFixed(1) + 'MB';
 		else
-			fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+			fileSize = (Math.round(file.size * 100 / 1024) / 100).toFixed(0) + 'KB';
 
 		// add file size to total size
 		sumFileSize = sumFileSize + file.size;
@@ -195,9 +199,24 @@ function fileSelected() {
 		feedBack.innerHTML = feedBack.innerHTML + '<div id="' + fInc + '">' + fString + '</div>'
 	}
 	// prepend files section count and total size to feedBack block
-	feedBack.innerHTML = '<p>' + i + ' files selected which are ' + (Math.round(sumFileSize * 100 / (1024 * 1024)) / 100).toString() + 'MB.</p>' + feedBack.innerHTML;
+	feedBack.innerHTML = '<p>' + i + ' files selected which are ' + (Math.round(sumFileSize * 100 / (1024 * 1024)) / 100).toFixed(1) + 'MB.</p>' + feedBack.innerHTML;
 	// enable feedBack block
 	feedBack.style = 'display: block;';
+}
+
+// Calculates and returns the transfer speed.
+function transferSpeed(loaded) {
+    var transferTimeSplit = new Date().getTime();
+    var tc = (transferTimeSplit - transferTimer) / 1000; // global var transferTimer is set in the xhr.onreadystatechange event.
+    var rate = '';
+    var speed = Math.round(loaded / tc / 125);
+    if(speed > 12500) {
+        speed = (speed / 125000);
+        rate = speed.toFixed(2) + ' Mb/s';
+    } else {
+        rate = speed + ' Kb/s';
+    }
+    return rate;
 }
 
 // Validate the form before submission to the server.
@@ -243,26 +262,10 @@ function startUpload(form) {
 	// this requires the use of XMLHttpRequest Level 2 FormData API
 	var formData = new FormData();
 
-	// create the 'file' variable using the fileInput.files data
-	var file = fileInput.files;
-
-	// loop through fileInput.files data that has been saved to the 'file' variable
-	for (var i = 0; i < file.length; i++) {
-
-		// in debug mode return the processed file name
-		debugLog(file[i].name);
-
-		// append the 'file' variable data to our new form variable formData as fieldnames, file0, file1, file2, etc...
-		formData.append("file" + i, file[i]);
-	}
-
-	// all other form objects such as textareas, non-file inputs, etc have to be appended to formData
+	// form objects such as textareas, non-file inputs, etc have to be appended to formData
 	// append the 'debug mode' checkbox value and the 'information' textarea data to formData
 	formData.append('debug.mode', debugMode.checked);
 	formData.append('upload.comment', commentInput.value);
-
-	// append the file count value to formData
-	formData.append('file.count', file.length);
 	
 	// reset the progress bar
 	var progressBar = document.getElementById("progressBar");
@@ -272,13 +275,33 @@ function startUpload(form) {
 	// open a connection to our CFML server serving submit.cfm
 	xhr.open("POST", "submit.cfm", true);
 
-	// uncomment this to create a custom header to send to the server
-	//xhr.setRequestHeader('X-test', 'some value');
+	// create the 'file' variable using the fileInput.files data
+	var file = fileInput.files;
+
+	// append the file count value to formData
+	formData.append('file.count', file.length);
+	xhr.setRequestHeader("X-File-Count", file.length);
+
+	// loop through fileInput.files data that has been saved to the 'file' variable
+	for (var i = 0; i < file.length; i++) {
+
+		// in debug mode return the processed file name
+		debugLog(file[i].name);
+
+		// append the 'file' variable data to our new form variable formData as fieldnames, file0, file1, file2, etc...
+		formData.append("file" + i, file[i]);
+
+        // optional, pass additional data using http headers that can be processed by the server
+        xhr.setRequestHeader("X-File-" + i + "-Last-Modified", file[i].lastModifiedDate.toUTCString()); // .toUTCString() is needed else server can't parse the date
+        xhr.setRequestHeader("X-File-" + i + "-Name", file[i].name);
+        xhr.setRequestHeader("X-File-" + i + "-Size", file[i].size);
+        xhr.setRequestHeader("X-File-" + i + "-Type", file[i].type);
+	}
 
 	// submit our new form variable formData and any custom headers to the CFML server
 	xhr.send(formData);
 
 	// any responses from the server will be handled by the onreadystatechange event 
 	// xhr.onreadystatechange = function(e) { }
-	// which is located near the beginning of this JavaScript
+	// which is located near the top of this script file
 }

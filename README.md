@@ -1,13 +1,13 @@
 html5Upload
 ===========
 
-HTML5 multiple files upload JavaScript example for CFML/ColdFusion/Railo using XMLHttpRequest Level 2.
+HTML5 multiple files upload JavaScript example for CFML (ColdFusion, Lucee, Railo) using XMLHttpRequest Level 2.
 
-The [_HTML5 `<input>` multiple Attribute_](http://www.w3schools.com/tags/att_input_multiple.asp) is not correctly handled by ColdFusion/Railo's `cffile action = "uploadAll"` tag or the `FileUploadAll` functions. This application uses JavaScript to correct the form file submission without the need of library dependancies such as JQuery.
+The [_HTML5 `<input>` multiple Attribute_](http://www.w3schools.com/tags/att_input_multiple.asp) is not correctly handled by ColdFusion/Lucee's `cffile action = "uploadAll"` tag or the `FileUploadAll` functions. This application uses JavaScript to correct the form file submission without the need of library dependencies such as JQuery.
 
 ####Requirements
 
-* ColdFusion, Railo or CFML compatible server that supports the `cffile action = "uploadAll"` tag or the `FileUploadAll` function.
+* ColdFusion, Lucee or CFML compatible server that supports the `cffile action = "uploadAll"` tag or the `FileUploadAll` function.
 * A client web browser that supports _HTML5_, _XMLHttpRequest Level 2_ and the _FormData API_. [Can I use XMLHttpRequest 2?](http://caniuse.com/xhr2)
 * A client web browser that has JavaScript turned on.
 
@@ -36,9 +36,9 @@ When the `upload.html` _Upload files!_ button is clicked a `submit.js` `startUpl
 
 The `startUpload()` function POSTs the _FormData API_ generated form to `submit.cfm` using the in-browser `XMLHttpRequest()` function. `submit.cfm` treats the POST as a typical form and handles it with the `cffile action = "uploadAll"` tag. All errors or success messages created by `submit.cfm` are returned to web browser as HTML tags sent over HTTP. These replies are handled by _XMLHttpRequest_ events contained in `submit.js`. The events use JavaScript to update the HTML DOM which refresh the client web browser with the updated HTML tags.
 
-![Form submission comparision](https://github.com/bengarrett/html5Upload/blob/master/screenshots/form.submission.comparison.png)
+![Form submission comparison](https://github.com/bengarrett/html5Upload/blob/master/screenshots/form.submission.comparison.png)
 
-####Sample screenshots
+####Sample screen shots
 
 ![Files selection](https://github.com/bengarrett/html5Upload/blob/master/screenshots/pre-upload.files.section.png)
 
@@ -61,4 +61,4 @@ The `startUpload()` function POSTs the _FormData API_ generated form to `submit.
 
 ####Licence
 [The MIT License (MIT)](http://opensource.org/licenses/MIT)
-Copyright (c) 2014 Ben Garrett
+Copyright (c) 2015 Ben Garrett

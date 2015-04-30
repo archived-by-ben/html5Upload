@@ -209,12 +209,13 @@ function transferSpeed(loaded) {
     var transferTimeSplit = new Date().getTime();
     var tc = (transferTimeSplit - transferTimer) / 1000; // global var transferTimer is set in the xhr.onreadystatechange event.
     var rate = '';
-    var speed = Math.round(loaded / tc / 125);
-    if(speed > 12500) {
-        speed = (speed / 125000);
-        rate = speed.toFixed(2) + ' Mb/s';
+    var speed = Math.round(loaded / tc); // loaded is a value of bytes
+    if(speed > 104858) {
+        speed = (speed/1048576);
+        rate = speed.toFixed(1) + ' Mibit/s'; // Mebibit per second
     } else {
-        rate = speed + ' Kb/s';
+        speed = (speed/1024);
+        rate = speed + ' Kibit/s'; // Kibibit per second
     }
     return rate;
 }

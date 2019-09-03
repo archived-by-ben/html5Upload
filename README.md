@@ -1,31 +1,34 @@
 html5Upload
 ===========
 
+![GitHub](https://img.shields.io/github/license/bengarrett/html5Upload?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/no/2015?style=flat-square)
+
 HTML5 multiple files upload JavaScript example for CFML (ColdFusion, Lucee, Railo) using XMLHttpRequest Level 2.
 
 The [_HTML5 `<input>` multiple Attribute_](http://www.w3schools.com/tags/att_input_multiple.asp) is not correctly handled by ColdFusion/Lucee's `cffile action = "uploadAll"` tag or the `FileUploadAll` functions. This application uses JavaScript to correct the form file submission without the need of library dependencies such as JQuery.
 
-####Requirements
+#### Requirements
 
 * ColdFusion, Lucee or CFML compatible server that supports the `cffile action = "uploadAll"` tag or the `FileUploadAll` function.
 * A client web browser that supports _HTML5_, _XMLHttpRequest Level 2_ and the _FormData API_. [Can I use XMLHttpRequest 2?](http://caniuse.com/xhr2)
 * A client web browser that has JavaScript turned on.
 
-####Recommendation
+#### Recommendation
 
 * A client web browser with its JavaScript console enabled to view `console.log` outputs. You can use [FireBug in FireFox](https://getfirebug.com), [DevTools console in Chrome](https://developer.chrome.com/devtools/index) or the [Web Inspector console in Safari](https://developer.apple.com/safari/tools/).
 
-####Important!
+#### Important!
 
 `submit.js` in its current form is too verbose as it is intended for debugging and feedback. **It should not be used in a production environment without modification**.
 
-####Usage
+#### Usage
 
 1. Download the ZIP `html5Upload-master.zip` and extract it into the webroot of your CFML server.
 2. Edit `submit.cfm` and make sure the `savedUploadsPath` variable at line 9 points to a valid directory. This is where the file uploads will be saved.
 3. View `upload.html` in a modern web browser. For a ColdFusion server running on a local machine the URL to do this might be [http://localhost:8500/html5Upload-master/upload.html](http://localhost:8500/html5Upload-master/upload.html).
 
-####How does it work?
+#### How does it work?
 
 The application comes with 3 primary files plus a customized version of [BootStrap](http://getbootstrap.com) for some basic HTML5 theming.
 * `upload.html` A standard HTML5 file upload form. One important difference is it uses a JavaScript `onclick` event to submit the form.
@@ -38,7 +41,7 @@ The `startUpload()` function POSTs the _FormData API_ generated form to `submit.
 
 ![Form submission comparison](https://github.com/bengarrett/html5Upload/blob/master/screenshots/form.submission.comparison.png)
 
-####Sample screen shots
+#### Sample screen shots
 
 ![Files selection](https://github.com/bengarrett/html5Upload/blob/master/screenshots/pre-upload.files.section.png)
 
@@ -52,13 +55,13 @@ The `startUpload()` function POSTs the _FormData API_ generated form to `submit.
 
 [Uploading aborted](https://github.com/bengarrett/html5Upload/blob/master/screenshots/upload.files.abort.png)
 
-####Resources used
+#### Resources used
 * [New Tricks in XMLHttpRequest2 by Eric Bidelman](http://www.html5rocks.com/en/tutorials/file/xhr2/)
 * [Html5 File Upload with Progress by Shiv Kumar](http://www.matlus.com/html5-file-upload-with-progress/)
 * [w3schools - The XMLHttpRequest Object](http://www.w3schools.com/dom/dom_http.asp)
 * [W3C - File API](http://www.w3.org/TR/file-upload/)
 * [W3C - FormData XMLHttpRequest](https://dvcs.w3.org/hg/xhr/raw-file/tip/Overview.html)
 
-####Licence
+#### Licence
 [The MIT License (MIT)](http://opensource.org/licenses/MIT)
 Copyright (c) 2015 Ben Garrett
